@@ -1,7 +1,6 @@
 <?php
 require_once '../php/db.php';
 
-// Benutzer holen
 $result = $conn->query("
     SELECT benutzer.*, role.type as role_type
     FROM benutzer
@@ -37,9 +36,17 @@ $result = $conn->query("
     </style>
 </head>
 <body>
+
+
 <?php include '../components/sidebar.php'; ?>
+   
+
 
 <div style="width: 100%; margin-left: 200px">
+    <div style="margin-top: 20px">
+      <?php include '../components/functions/new_user.php'; ?>
+    </div>
+  
     <h1>Benutzerliste</h1>
     
     <table>
@@ -70,5 +77,20 @@ $result = $conn->query("
     </table>
 
 </div>
+
+<script>
+   
+    const modal = document.getElementById('userModal');
+    const openBtn = document.getElementById('openModalBtn');
+    const closeBtn = document.getElementById('closeModal');
+
+    openBtn.onclick = () => modal.style.display = 'flex';
+    closeBtn.onclick = () => modal.style.display = 'none';
+
+   
+    window.onclick = (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    }
+</script>
 </body>
 </html>
