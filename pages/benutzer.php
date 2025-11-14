@@ -57,6 +57,7 @@ $result = $conn->query("
             <th>Role</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Aktion</th>
         </tr>
         <?php
         if ($result->num_rows > 0) {
@@ -68,6 +69,12 @@ $result = $conn->query("
                 echo "<td>".$row['role_type']."</td>";
                 echo "<td>".$row['name']."</td>";
                 echo "<td>".$row['email']."</td>";
+                echo "<td>
+                        <form method='POST' action='delete_user.php' onsubmit='return confirm(\"Möchten Sie diesen Benutzer wirklich löschen?\");'>
+                            <input type='hidden' name='id' value='".$row['id']."'>
+                            <button type='submit'>Loeschen</button>
+                        </form>
+                    </td>";
                 echo "</tr>";
             }
         } else {
