@@ -49,7 +49,7 @@ $result = $conn->query("SELECT id, gast_id, stellplatz_id, abreise_datum, anreis
             <th>Tiere</th>
             <th>Anzahl Erwachsene</th>
             <th>Anzahl Kinder</th>
-            <th>Erstellt um</th>
+            <th>Erstellt am</th>
         </tr>
         <?php
         if ($result->num_rows > 0) {
