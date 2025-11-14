@@ -44,7 +44,7 @@ $result = $conn->query("
 
 <div style="width: 100%; margin-left: 200px">
     <div style="margin-top: 20px">
-      <?php include '../components/functions/new_user.php'; ?>
+      <?php include './new_user.php'; ?>
     </div>
   
     <h1>Benutzerliste</h1>
