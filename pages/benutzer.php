@@ -1,15 +1,20 @@
 <?php
 require_once '../php/db.php';
 
-// Gäste holen
-$result = $conn->query("SELECT id, nachname, vorname, anschrift_id, emal, phone, geburtsdatum FROM gast");
+// Benutzer holen
+$result = $conn->query("
+    SELECT benutzer.*, role.type as role_type
+    FROM benutzer
+    LEFT JOIN role ON benutzer.role_id = role.id"
+);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Gaesteuebersicht</title>
+    <title>Benutzer</title>
     <style>
         table {
             width: 80%;
@@ -32,41 +37,38 @@ $result = $conn->query("SELECT id, nachname, vorname, anschrift_id, emal, phone,
     </style>
 </head>
 <body>
-
 <?php include '../components/sidebar.php'; ?>
 
 <div style="width: 100%; margin-left: 200px">
-    <h1>Gaesteliste</h1>
-
+    <h1>Benutzerliste</h1>
+    
     <table>
         <tr>
             <th>ID</th>
-            <th>Nachname</th>
-            <th>Vorname</th>
-            <th>Anschrift-ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Name</th>
             <th>Email</th>
-            <th>Telefon</th>
-            <th>Geburtsdatum</th>
         </tr>
-
         <?php
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>".$row['id']."</td>";
-                echo "<td>".$row['nachname']."</td>";
-                echo "<td>".$row['vorname']."</td>";
-                echo "<td>".$row['anschrift_id']."</td>";
-                echo "<td>".$row['emal']."</td>";
-                echo "<td>".$row['phone']."</td>";
-                echo "<td>".$row['geburtsdatum']."</td>";
+                echo "<td>".$row['username']."</td>";
+                echo "<td>".$row['password']."</td>";
+                echo "<td>".$row['role_type']."</td>";
+                echo "<td>".$row['name']."</td>";
+                echo "<td>".$row['email']."</td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='7' style='text-align:center;'>Kein Gast gefunden</td></tr>";
+            echo "<tr><td colspan='7' style='text-align:center;'>Kein Benutzer gefunden</td></tr>";
         }
         ?>
     </table>
- </div>
+
+</div>
 </body>
 </html>

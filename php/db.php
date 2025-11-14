@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "tre_n3";
-$password = "+Abc123!tre";
+$username = "root";
+$password = "root";
 $dbname = "tre_n3";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
