@@ -70,6 +70,7 @@ $result = $conn->query("
                 echo "<td>".$row['name']."</td>";
                 echo "<td>".$row['email']."</td>";
                 echo "<td>
+                        <a href='edit_user.php?id=".$row['id']."' style='margin-right:5px;'>Bearbeiten</a>
                         <form method='POST' action='delete_user.php' onsubmit='return confirm(\"Möchten Sie diesen Benutzer wirklich löschen?\");'>
                             <input type='hidden' name='id' value='".$row['id']."'>
                             <button type='submit'>Loeschen</button>
