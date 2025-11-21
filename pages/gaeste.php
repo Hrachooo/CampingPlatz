@@ -47,6 +47,7 @@ $result = $conn->query("SELECT id, nachname, vorname, anschrift_id, emal, phone,
             <th>Email</th>
             <th>Telefon</th>
             <th>Geburtsdatum</th>
+            <th>Aktion</th>
         </tr>
 
         <?php
@@ -60,6 +61,13 @@ $result = $conn->query("SELECT id, nachname, vorname, anschrift_id, emal, phone,
                 echo "<td>".$row['emal']."</td>";
                 echo "<td>".$row['phone']."</td>";
                 echo "<td>".$row['geburtsdatum']."</td>";
+                echo "<td>
+                        <a href='edit_gast.php?id=".$row['id']."' style='margin-right:5px;'>Bearbeiten</a>
+                        <form method='POST' action='delete_user.php' onsubmit='return confirm(\"Möchten Sie diesen Benutzer wirklich löschen?\");'>
+                            <input type='hidden' name='id' value='".$row['id']."'>
+                            <button type='submit'>Loeschen</button>
+                        </form>
+                    </td>";
                 echo "</tr>";
             }
         } else {
