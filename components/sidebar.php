@@ -48,9 +48,9 @@
 
 <div class="sidebar">
     <h2>Campingplatz</h2>
-    <a href="/campinplatz2030/CampingPlatz/pages/gaeste.php">Gaeste</a>
-    <a href="/campinplatz2030/CampingPlatz/pages/buchungen.php">Buchungen</a>
-    <a href="/campinplatz2030/CampingPlatz/pages/stellplaetze.php">Stellplaetze</a>
-    <a href="/campinplatz2030/CampingPlatz/pages/benutzer.php">Benutzer</a>
+    <a href="../pages/gaeste.php">Gaeste</a>
+    <a href="../pages/buchungen.php">Buchungen</a>
+    <a href="../pages/stellplaetze.php">Stellplaetze</a>
+    <a href="../pages/benutzer.php">Benutzer</a>
 
 </div>
