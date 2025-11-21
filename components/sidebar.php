@@ -52,5 +52,5 @@
     <a href="./../pages/buchungen.php">Buchungen</a>
     <a href="./../pages/stellplaetze.php">Stellplaetze</a>
     <a href="./../pages/benutzer.php">Benutzer</a>
-
+    <a href="./../logout.php">Logout</a>
 </div>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     // SQL-Abfrage vorbereiten
-    $stmt = $conn->prepare("SELECT * FROM Benutzer WHERE username = '$username'");
+    $stmt = $conn->prepare("SELECT * FROM benutzer WHERE username = '$username'");
     //$stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
