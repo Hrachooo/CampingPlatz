@@ -48,9 +48,21 @@
 
 <div class="sidebar">
     <h2>Campingplatz</h2>
-    <a href="./../pages/gaeste.php">Gaeste</a>
-    <a href="./../pages/buchungen.php">Buchungen</a>
-    <a href="./../pages/stellplaetze.php">Stellplaetze</a>
-    <a href="./../pages/benutzer.php">Benutzer</a>
+    <?php
+    session_start();
+        if (!isset($_SESSION['roleid'])) {
+            header("Location: login.php");
+            exit;
+        }
+
+        if ($_SESSION['roleid'] == 1) {
+            // Show admin dashboard
+            echo '<a href="./../pages/benutzer.php">Benutzer</a>';
+        } else {
+            echo '<a href="./../pages/gaeste.php">Gaeste</a>';
+            echo '<a href="./../pages/buchungen.php">Buchungen</a>';
+            echo '<a href="./../pages/stellplaetze.php">Stellplaetze</a>';
+        }
+    ?>
     <a href="./../logout.php">Logout</a>
 </div>

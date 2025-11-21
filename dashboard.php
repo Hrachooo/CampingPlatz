@@ -1,6 +1,5 @@
 <?php
 require_once 'php/db.php'; // Deine DB-Verbindung
-
 ?>
 
 <!DOCTYPE html>
