@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role = intval($_POST['role']);
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("INSERT INTO Benutzer (username, password, role_id, name, email) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO benutzer (username, password, role_id, name, email) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sssss", $username, $password, $role, $name, $email);
 
     if ($stmt->execute()) {
