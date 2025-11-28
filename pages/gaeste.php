@@ -36,6 +36,10 @@ $result = $conn->query("SELECT id, nachname, vorname, anschrift_id, emal, phone,
 <?php include '../components/sidebar.php'; ?>
 
 <div style="width: 100%; margin-left: 200px">
+    <div style="margin-top: 20px">
+      <?php include './new_gast.php'; ?>
+    </div>
+
     <h1>Gaesteliste</h1>
 
     <table>
@@ -76,5 +80,21 @@ $result = $conn->query("SELECT id, nachname, vorname, anschrift_id, emal, phone,
         ?>
     </table>
  </div>
+
+
+ <script>
+   
+    const modal = document.getElementById('gastModal');
+    const openBtn = document.getElementById('openGastModalBtn');
+    const closeBtn = document.getElementById('closeGastModal');
+
+    openBtn.onclick = () => modal.style.display = 'flex';
+    closeBtn.onclick = () => modal.style.display = 'none';
+
+   
+    window.onclick = (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    }
+</script>
 </body>
 </html>
