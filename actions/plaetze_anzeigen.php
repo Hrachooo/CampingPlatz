@@ -8,6 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $wasser  = isset($_POST['wasser']) ? 1 : 0;
     $strom   = isset($_POST['strom']) ? 1 : 0;
 
+    $erwachsene     = $_POST['erwachsene'];
+    $kinder         = $_POST['kinder'];
+    $tier           = $_POST['tier'];    
+
     // passende Stellplätze suchen
     $sql = "SELECT * FROM stellplatz 
             WHERE qm >= ? AND wasser >= ? AND strom >= ?";
@@ -108,6 +112,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type='hidden' name='stellplatz_id' value='{$p['id']}'>
                         <input type='hidden' name='anreise_datum' value='$anreise'>
                         <input type='hidden' name='abreise_datum' value='$abreise'>
+                        <input type='hidden' name='erwachsene' value='$erwachsene'>
+                        <input type='hidden' name='kinder' value='$kinder'>
+                        <input type='hidden' name='tier' value='$tier'>
+                        <input type='hidden' name='wasser' value='$wasser'>
+                        <input type='hidden' name='strom' value='$strom'>
                         <button type='submit' class='platz-btn'>Diesen Platz waehlen</button>
                     </form>
                   </div>";

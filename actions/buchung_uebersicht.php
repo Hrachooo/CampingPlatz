@@ -26,7 +26,11 @@ $preis = $erwachsene * 20 + $kinder * 10;
 if ($tier)   $preis += 5;
 if ($wasser) $preis += 3;
 if ($strom)  $preis += 4;
-$tage = (strtotime($abreise) - strtotime($anreise)) / (60*60*24);
+
+$start = new DateTime($anreise);
+$end   = new DateTime($abreise);
+$diff  = $start->diff($end);
+$tage  = $diff->days;
 if ($tage < 1) $tage = 1;
 $preis *= $tage;
 ?>
