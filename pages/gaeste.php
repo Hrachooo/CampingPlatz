@@ -63,7 +63,7 @@ $result = $conn->query("SELECT id, nachname, vorname, anschrift_id, emal, phone,
                 echo "<td>".$row['geburtsdatum']."</td>";
                 echo "<td>
                         <a href='edit_gast.php?id=".$row['id']."' style='margin-right:5px;'>Bearbeiten</a>
-                        <form method='POST' action='delete_user.php' onsubmit='return confirm(\"Möchten Sie diesen Benutzer wirklich löschen?\");'>
+                        <form method='POST' action='delete_gast.php' onsubmit='return confirm(\"Möchten Sie diesen Gast wirklich löschen?\");'>
                             <input type='hidden' name='id' value='".$row['id']."'>
                             <button type='submit'>Loeschen</button>
                         </form>
