@@ -42,9 +42,9 @@ $result = $conn->query("SELECT id, gast_id, stellplatz_id, abreise_datum, anreis
         <tr>
             <th>ID</th>
             <th>Gast id</th>
-            <th>Stellplatz id</th>
-            <th>Abreise Datum</th>
+            <th>Stellplatz id</th>            
             <th>Anreise Datum</th>
+            <th>Abreise Datum</th>
             <th>Strom</th>
             <th>Tiere</th>
             <th>Anzahl Erwachsene</th>
@@ -58,8 +58,8 @@ $result = $conn->query("SELECT id, gast_id, stellplatz_id, abreise_datum, anreis
                 echo "<td>".$row['id']."</td>";
                 echo "<td>".$row['gast_id']."</td>";
                 echo "<td>".$row['stellplatz_id']."</td>";
-                echo "<td>".$row['abreise_datum']."</td>";
                 echo "<td>".$row['anreise_datum']."</td>";
+                echo "<td>".$row['abreise_datum']."</td>";
                 echo "<td>".$row['strom']."</td>";
                 echo "<td>".$row['tiere']."</td>";
                  echo "<td>".$row['anzahl_erwachsene']."</td>";
