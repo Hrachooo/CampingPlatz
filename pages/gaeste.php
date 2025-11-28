@@ -36,7 +36,7 @@ $result = $conn->query("SELECT id, nachname, vorname, anschrift_id, emal, phone,
 <?php include '../components/sidebar.php'; ?>
 
 <div style="width: 100%; margin-left: 200px">
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px; display: none">
       <?php include './new_gast.php'; ?>
     </div>
 
