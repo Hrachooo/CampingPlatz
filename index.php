@@ -76,7 +76,7 @@
 <body style="padding: 0; margin: 0;overflow-x: hidden;">
     <div id="topbar">
         <h2 id="title">Campingplatz</h2>
-        <button id="btn">Login</button>
+        <button id="btn" onclick="window.location.href='login.php'">Login</button>
     </div>
 
     <div style="display: flex; justify-content: center">
