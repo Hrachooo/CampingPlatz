@@ -1,64 +1,160 @@
-<?php
+﻿<?php
 require_once '../php/db.php';
 
 $result = $conn->query("
-    SELECT benutzer.*, role.type as role_type
+    SELECT benutzer.*, role.type AS role_type
     FROM benutzer
-    LEFT JOIN role ON benutzer.role_id = role.id"
-);
-
+    LEFT JOIN role ON benutzer.role_id = role.id
+");
 ?>
 
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Benutzer</title>
+    <title>Benutzerverwaltung</title>
     <style>
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin: 20px auto;
+        body {
+            margin: 0;
             font-family: Arial, sans-serif;
+            background: #f5f6fa;
         }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px 12px;
-            text-align: left;
+
+        .content {
+            margin-left: 230px; 
+            padding: 30px;
         }
-        th {
-            background-color: #f2f2f2;
-        }
+
         h1 {
             text-align: center;
-            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        /* Such- und Filterbox */
+        .filter-box {
+            width: 80%;
+            margin: 10px auto 25px auto;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-box label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .filter-box input,
+        .filter-box select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #4a69bd;
+            color: white;
+            padding: 12px 10px;
+            font-size: 15px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f0f3f7;
+        }
+
+        /* Buttons */
+        .btn-edit {
+            background: #1e90ff;
+            color: white;
+            padding: 7px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+        .btn-edit:hover {
+            background: #0f67c5;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            padding: 7px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .action-container {
+            display: flex;
+            gap: 6px;
+            align-items: center;
         }
     </style>
 </head>
 <body>
 
-
 <?php include '../components/sidebar.php'; ?>
-   
 
+<div class="content">
 
-<div style="width: 100%; margin-left: 200px">
-    <div style="margin-top: 20px">
-      <?php include './new_user.php'; ?>
+    <div style="margin-bottom: 20px;">
+        <?php include './new_user.php'; ?>
     </div>
-  
+
     <h1>Benutzerliste</h1>
-    
-    <table>
+
+<!-- Such- und Filterbox -->
+<div class="filter-box">
+    <input type="text" id="searchInput" placeholder="🔍 Suchen nach Name, E-Mail oder Username ..." style="flex:1; min-width:300px; font-size:16px; padding:10px;">
+
+    <label for="filterRole">Rolle:</label>
+    <select id="filterRole" style="padding:8px; font-size:14px;">
+        <option value="">Alle Rollen</option>
+        <?php
+        $roles = $conn->query("SELECT DISTINCT type FROM role");
+        while($r = $roles->fetch_assoc()) {
+            echo '<option value="'.$r['type'].'">'.$r['type'].'</option>';
+        }
+        ?>
+    </select>
+</div>
+
+
+    <table id="userTable">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Username</th>
             <th>Password</th>
-            <th>Role</th>
+            <th>Rolle</th>
             <th>Name</th>
             <th>Email</th>
             <th>Aktion</th>
         </tr>
+        </thead>
+        <tbody>
         <?php
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -69,36 +165,45 @@ $result = $conn->query("
                 echo "<td>".$row['role_type']."</td>";
                 echo "<td>".$row['name']."</td>";
                 echo "<td>".$row['email']."</td>";
-                echo "<td>
-                        <a href='edit_user.php?id=".$row['id']."' style='margin-right:5px;'>Bearbeiten</a>
-                        <form method='POST' action='delete_user.php' onsubmit='return confirm(\"M�chten Sie diesen Benutzer wirklich l�schen?\");'>
+                echo "<td class='action-container'>
+                        <a class='btn-edit' href='edit_user.php?id=".$row['id']."'>Bearbeiten</a>
+                        <form method='POST' action='delete_user.php' onsubmit='return confirm(\"Möchten Sie diesen Benutzer wirklich löschen?\");'>
                             <input type='hidden' name='id' value='".$row['id']."'>
-                            <button type='submit'>Loeschen</button>
+                            <button class='btn-delete' type='submit'>Löschen</button>
                         </form>
                     </td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='7' style='text-align:center;'>Kein Benutzer gefunden</td></tr>";
+            echo "<tr><td colspan='7' style='text-align:center;'>Keine Benutzer gefunden</td></tr>";
         }
         ?>
+        </tbody>
     </table>
-
 </div>
 
 <script>
-   
-    const modal = document.getElementById('userModal');
-    const openBtn = document.getElementById('openModalBtn');
-    const closeBtn = document.getElementById('closeModal');
+const searchInput = document.getElementById('searchInput');
+const filterRole = document.getElementById('filterRole');
 
-    openBtn.onclick = () => modal.style.display = 'flex';
-    closeBtn.onclick = () => modal.style.display = 'none';
+function filterTable() {
+    const rows = document.querySelectorAll('#userTable tbody tr');
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const role = row.cells[3].textContent;
+        const name = row.cells[4].textContent.toLowerCase();
 
-   
-    window.onclick = (e) => {
-        if (e.target === modal) modal.style.display = 'none';
-    }
+        let show = true;
+        if (searchInput.value && !text.includes(searchInput.value.toLowerCase())) show = false;
+        if (filterRole.value && role !== filterRole.value) show = false;
+
+        row.style.display = show ? '' : 'none';
+    });
+}
+
+searchInput.addEventListener('keyup', filterTable);
+filterRole.addEventListener('change', filterTable);
 </script>
+
 </body>
 </html>
