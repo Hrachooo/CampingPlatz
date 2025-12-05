@@ -22,7 +22,7 @@
             <select name="role" id="role" required>
                 <option value="1">Admin</option>
                 <option value="2">Sachbearbeiter</option>
-                <option value="3">Geschäftsführer</option>
+                <option value="3">Geschaeftsfuehrer</option>
             </select>
 
             <button type="submit">User erstellen</button>

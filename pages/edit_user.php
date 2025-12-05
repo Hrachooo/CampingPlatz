@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <select name="role_id">
             <option value="1" <?= $user['role_id']==1?'selected':'' ?>>Admin</option>
             <option value="2" <?= $user['role_id']==2?'selected':'' ?>>Sachbearbeiter</option>
-            <option value="2" <?= $user['role_id']==3?'selected':'' ?>>Geschäftsführer</option>
+            <option value="3" <?= $user['role_id']==3?'selected':'' ?>>Geschaeftsfuehrer</option>
         </select>
     </label><br>
     <button type="submit">Speichern</button>
