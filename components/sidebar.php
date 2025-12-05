@@ -6,11 +6,17 @@ if (!isset($_SESSION['roleid'])) {
 }
 ?>
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 /* Sidebar Container */
+body {
+    font-family: Arial, sans-serif;
+}
 .sidebar {
     width: 230px;
     background: #1e2a38;
@@ -81,6 +87,8 @@ if (!isset($_SESSION['roleid'])) {
     }
 }
 </style>
+</head>
+<body>
 
 <div class="sidebar">
     <h2><i class="fa-solid fa-campground"></i> Campingplatz</h2>
@@ -117,3 +125,5 @@ if (!isset($_SESSION['roleid'])) {
 
     <a href="./../logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
 </div>
+</body>
+</html>

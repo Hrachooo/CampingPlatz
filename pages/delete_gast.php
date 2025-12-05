@@ -37,6 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 <meta charset="UTF-8">
 <title>Gast löschen</title>
 <style>
+body {
+    font-family: Arial, sans-serif;
+}
+
 .feedback {
     width: 90%;
     max-width: 600px;
