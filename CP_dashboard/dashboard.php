@@ -1,5 +1,5 @@
 <?php
-require_once 'php/db.php'; // Deine DB-Verbindung
+require_once '../php/db.php'; // Deine DB-Verbindung
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ require_once 'php/db.php'; // Deine DB-Verbindung
 </head>
 <body>
 
-<?php include 'components/sidebar.php'; ?>
+<?php include './../components/sidebar.php'; ?>
 
 </body>
 </html>

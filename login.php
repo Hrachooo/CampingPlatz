@@ -4,7 +4,7 @@ require_once 'php/db.php'; // Deine DB-Verbindung
 
 // Falls der Benutzer bereits eingeloggt ist, leite ihn zum Dashboard weiter
 if (isset($_SESSION['username'])) {
-    header("Location: dashboard.php");
+    header("Location: ./CP_dashboard/dashboard.php");
     exit();
 }
 
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
             // Weiterleitung zum Dashboard oder geschützte Seite
-            header("Location: dashboard.php");
+            header("Location: ./CP_dashboard/dashboard.php");
             exit();
         } else {
             $error_message = "Falsches Passwort!";
