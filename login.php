@@ -3,8 +3,14 @@ session_start();
 require_once 'php/db.php'; // Deine DB-Verbindung
 
 // Falls der Benutzer bereits eingeloggt ist, leite ihn zum Dashboard weiter
-if (isset($_SESSION['username'])) {
-    header("Location: ./CP_dashboard/dashboard.php");
+if (isset($_SESSION['role_id'])) {
+    if ($_SESSION['role_id'] == 1)
+    {
+        header("Location: ./pages/benutzer.php");
+    }
+    else {
+        header("Location: ./pages/gaeste.php");
+    }
     exit();
 }
 
@@ -34,10 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['name'] = $user['name'];
             $_SESSION['roleid'] = $user['role_id'];
 
-
-
-            // Weiterleitung zum Dashboard oder geschützte Seite
-            header("Location: ./CP_dashboard/dashboard.php");
+            if ($user['role_id'] == 1)
+            {
+                header("Location: ./pages/benutzer.php");
+            }
+            else {
+                header("Location: ./pages/gaeste.php");
+            }
             exit();
         } else {
             $error_message = "Falsches Passwort!";
