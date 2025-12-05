@@ -3,8 +3,8 @@ session_start();
 require_once 'php/db.php'; // Deine DB-Verbindung
 
 // Falls der Benutzer bereits eingeloggt ist, leite ihn zum Dashboard weiter
-if (isset($_SESSION['role_id'])) {
-    if ($_SESSION['role_id'] == 1)
+if (isset($_SESSION['roleid'])) {
+    if ($_SESSION['roleid'] == 1)
     {
         header("Location: ./pages/benutzer.php");
     }
