@@ -11,7 +11,7 @@ if (!isset($_SESSION['username'])) {
 $roleid = $_SESSION['roleid'];
 
 // Zugriff verweigern, wenn Rolle ungleich 3
-if ($roleid != 3) {
+if ($roleid == 1) {
     ?>
     <!DOCTYPE html>
     <html lang="de">
@@ -67,6 +67,9 @@ if ($roleid != 3) {
     </html>
     <?php
     exit;
+} else {
+    // Buchungen holen 
+    $result = $conn->query(" SELECT b.*, g.vorname, g.nachname FROM buchung b LEFT JOIN gast g ON b.gast_id = g.id ");
 }
 ?>
 
@@ -136,11 +139,6 @@ if ($roleid != 3) {
 
 <div class="content">
     <h1>Buchungsliste</h1>
-
-    <!-- Aktueller User -->
-    <div class="user-info">
-        Angemeldet als: <?= htmlspecialchars($name) ?> (<?= htmlspecialchars($username) ?>) – Rolle: <?= $roleid ?>
-    </div>
 
     <!-- Suchfeld -->
     <div class="search-box">

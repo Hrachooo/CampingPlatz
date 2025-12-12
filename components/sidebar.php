@@ -116,7 +116,7 @@ body {
         // Mitarbeiter / Standard-Rolle
         else {
             echo '<a class="'.active("gaeste.php", $current).'" href="./../pages/gaeste.php">
-                    <i class="fa-solid fa-user"></i> Gäste
+                    <i class="fa-solid fa-user"></i> Gaeste
                   </a>';
 
             echo '<a class="'.active("buchungen.php", $current).'" href="./../pages/buchungen.php">
@@ -124,7 +124,7 @@ body {
                   </a>';
 
             echo '<a class="'.active("stellplaetze.php", $current).'" href="./../pages/stellplaetze.php">
-                    <i class="fa-solid fa-map"></i> Stellplätze
+                    <i class="fa-solid fa-map"></i> Stellplaetze
                   </a>';
         }
     ?>

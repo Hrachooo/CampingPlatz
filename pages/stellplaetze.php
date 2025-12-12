@@ -1,13 +1,77 @@
 ﻿<?php
+session_start();
 require_once '../php/db.php';
 
-$result = $conn->query("
-    SELECT stellplatz.*, buchung.stellplatz_id AS gebucht_stellplatz_id
-    FROM stellplatz
-    LEFT JOIN buchung ON stellplatz.id = buchung.stellplatz_id
-    ORDER BY (buchung.stellplatz_id IS NOT NULL) DESC, nummer ASC
-");
+// Zugriff verweigern, wenn kein Login vorhanden
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
+$roleid = $_SESSION['roleid'];
+
+// Zugriff verweigern, wenn Rolle ungleich 3
+if ($roleid == 1) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>Zugriff verweigert</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #f5f6fa;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .denied-box {
+                background: #fff;
+                padding: 30px;
+                border-radius: 12px;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+                text-align: center;
+                max-width: 400px;
+            }
+            h1 {
+                color: #c0392b;
+                margin-bottom: 15px;
+            }
+            p {
+                color: #555;
+                margin-bottom: 20px;
+            }
+            a {
+                display: inline-block;
+                padding: 10px 18px;
+                background: #3498db;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 6px;
+            }
+            a:hover {
+                background: #2980b9;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="denied-box">
+            <h1>Zugriff verweigert</h1>
+            <p>Du hast leider keine Berechtigung, diese Seite zu sehen.</p>
+            <a href="../login.php">Zurück zum Login</a>
+        </div>
+    </body>
+    </html>
+    <?php
+    exit;
+} else {
+    $result = $conn->query(" SELECT stellplatz.*, buchung.stellplatz_id AS gebucht_stellplatz_id FROM stellplatz LEFT JOIN buchung ON stellplatz.id = buchung.stellplatz_id ORDER BY (buchung.stellplatz_id IS NOT NULL) DESC, nummer ASC ");
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="de">
