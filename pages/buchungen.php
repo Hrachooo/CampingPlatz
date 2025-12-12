@@ -1,12 +1,73 @@
 ﻿<?php
+session_start();
 require_once '../php/db.php';
 
-// Buchungen holen
-$result = $conn->query("
-    SELECT b.*, g.vorname, g.nachname
-    FROM buchung b
-    LEFT JOIN gast g ON b.gast_id = g.id
-");
+// Zugriff verweigern, wenn kein Login vorhanden
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
+$roleid = $_SESSION['roleid'];
+
+// Zugriff verweigern, wenn Rolle ungleich 3
+if ($roleid != 3) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>Zugriff verweigert</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #f5f6fa;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .denied-box {
+                background: #fff;
+                padding: 30px;
+                border-radius: 12px;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+                text-align: center;
+                max-width: 400px;
+            }
+            h1 {
+                color: #c0392b;
+                margin-bottom: 15px;
+            }
+            p {
+                color: #555;
+                margin-bottom: 20px;
+            }
+            a {
+                display: inline-block;
+                padding: 10px 18px;
+                background: #3498db;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 6px;
+            }
+            a:hover {
+                background: #2980b9;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="denied-box">
+            <h1>Zugriff verweigert</h1>
+            <p>Du hast leider keine Berechtigung, diese Seite zu sehen.</p>
+            <a href="../login.php">Zurück zum Login</a>
+        </div>
+    </body>
+    </html>
+    <?php
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,23 +81,23 @@ $result = $conn->query("
             font-family: Arial, sans-serif;
             background: #f5f6fa;
         }
-
         .content {
-            margin-left: 230px; /* Sidebar-Breite */
+            margin-left: 230px;
             padding: 30px;
         }
-
         h1 {
             text-align: center;
             color: #333;
         }
-
-        /* Suchfeld */
+        .user-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
         .search-box {
             width: 80%;
             margin: 10px auto 25px auto;
         }
-
         .search-box input {
             padding: 10px;
             width: 100%;
@@ -44,8 +105,6 @@ $result = $conn->query("
             border-radius: 6px;
             font-size: 14px;
         }
-
-        /* Tabelle */
         table {
             width: 90%;
             margin: 0 auto;
@@ -55,20 +114,17 @@ $result = $conn->query("
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
-
         th {
             background: #4a69bd;
             color: white;
             padding: 12px 10px;
             font-size: 15px;
         }
-
         td {
             padding: 10px;
             border-bottom: 1px solid #eee;
             font-size: 14px;
         }
-
         tr:hover {
             background: #f0f3f7;
         }
@@ -80,6 +136,11 @@ $result = $conn->query("
 
 <div class="content">
     <h1>Buchungsliste</h1>
+
+    <!-- Aktueller User -->
+    <div class="user-info">
+        Angemeldet als: <?= htmlspecialchars($name) ?> (<?= htmlspecialchars($username) ?>) – Rolle: <?= $roleid ?>
+    </div>
 
     <!-- Suchfeld -->
     <div class="search-box">
@@ -103,7 +164,7 @@ $result = $conn->query("
         </tr>
 
         <?php
-        if ($result->num_rows > 0) {
+        if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $gastName = htmlspecialchars($row['vorname'].' '.$row['nachname']);
                 echo "<tr>";
@@ -128,7 +189,6 @@ $result = $conn->query("
 </div>
 
 <script>
-/* LIVE-SUCHE */
 document.getElementById("searchInput").addEventListener("keyup", function() {
     let filter = this.value.toLowerCase();
     let rows = document.querySelectorAll("#buchungTable tr:not(:first-child)");

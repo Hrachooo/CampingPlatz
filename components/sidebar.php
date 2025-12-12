@@ -1,10 +1,16 @@
 <?php
-session_start();
+// Session nur starten, wenn noch keine läuft
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Zugriff prüfen
 if (!isset($_SESSION['roleid'])) {
-    header("Location: login.php");
+    header("Location: ../login.php"); // Pfad ggf. anpassen
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="de">
