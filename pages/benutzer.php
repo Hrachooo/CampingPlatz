@@ -147,7 +147,6 @@ $result = $conn->query("
         <tr>
             <th>ID</th>
             <th>Username</th>
-            <th>Password</th>
             <th>Rolle</th>
             <th>Name</th>
             <th>Email</th>
@@ -161,7 +160,6 @@ $result = $conn->query("
                 echo "<tr>";
                 echo "<td>".$row['id']."</td>";
                 echo "<td>".$row['username']."</td>";
-                echo "<td>".$row['password']."</td>";
                 echo "<td>".$row['role_type']."</td>";
                 echo "<td>".$row['name']."</td>";
                 echo "<td>".$row['email']."</td>";

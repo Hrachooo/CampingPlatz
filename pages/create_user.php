@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name     = $_POST['name'];
     $email    = $_POST['email'];
     $role     = intval($_POST['role']);
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     $stmt = $conn->prepare("INSERT INTO benutzer (username, password, role_id, name, email) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssiss", $username, $password, $role, $name, $email);
