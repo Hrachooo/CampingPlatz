@@ -20,41 +20,134 @@ if ($roleid == 1) {
         <title>Zugriff verweigert</title>
         <style>
             body {
-                font-family: Arial, sans-serif;
-                background: #f5f6fa;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
                 margin: 0;
+                font-family: 'Inter', Arial, sans-serif;
+                background: #f0f2f5; /* modernes hellgrau */
+                color: #2d3436;
             }
-            .denied-box {
-                background: #fff;
-                padding: 30px;
-                border-radius: 12px;
-                box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-                text-align: center;
-                max-width: 400px;
+
+            /* Content */
+            .content {
+                margin-left: 230px;
+                padding: 40px;
             }
+
+            /* Titel */
             h1 {
-                color: #c0392b;
-                margin-bottom: 15px;
+                text-align: center;
+                color: #1e293b; /* modernes dunkelblau-grau */
+                font-weight: 600;
+                margin-bottom: 25px;
             }
-            p {
-                color: #555;
-                margin-bottom: 20px;
+
+            /* Suchfeld */
+            .search-filter-box input {
+                padding: 12px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                font-size: 15px;
+                background: #fff;
+                transition: 0.2s;
             }
-            a {
-                display: inline-block;
-                padding: 10px 18px;
-                background: #3498db;
-                color: #fff;
+
+            .search-filter-box input:focus {
+                border-color: #6366f1; /* Indigo */
+                box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+                outline: none;
+            }
+
+            /* Tabelle */
+            table {
+                width: 90%;
+                margin: 0 auto;
+                border-collapse: collapse;
+                background: #ffffff;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            }
+
+            th {
+                background: #6366f1; /* Indigo */
+                color: white;
+                padding: 14px 12px;
+                font-size: 15px;
+                font-weight: 500;
+            }
+
+            td {
+                padding: 12px;
+                border-bottom: 1px solid #e5e7eb;
+                font-size: 14px;
+                color: #374151;
+            }
+
+            tr:hover {
+                background: #f9fafb;
+            }
+
+            /* Buttons */
+            .btn-edit {
+                background: #3b82f6; /* modernes Blau */
+                color: white;
+                padding: 7px 12px;
                 text-decoration: none;
                 border-radius: 6px;
+                font-size: 13px;
+                transition: 0.2s;
             }
-            a:hover {
-                background: #2980b9;
+
+            .btn-edit:hover {
+                background: #2563eb;
             }
+
+            .btn-delete {
+                background: #ef4444; /* modernes Rot */
+                color: white;
+                padding: 7px 12px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 13px;
+                transition: 0.2s;
+            }
+
+            .btn-delete:hover {
+                background: #dc2626;
+            }
+
+            .action-container {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+
+            /* Zugriff verweigert Box */
+            .denied-box {
+                background: #ffffff;
+                padding: 35px;
+                border-radius: 14px;
+                box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+                text-align: center;
+            }
+
+            .denied-box h1 {
+                color: #ef4444;
+            }
+
+            .denied-box a {
+                background: #6366f1;
+                padding: 10px 20px;
+                border-radius: 8px;
+                color: white;
+                text-decoration: none;
+                transition: 0.2s;
+            }
+
+            .denied-box a:hover {
+                background: #4f46e5;
+            }
+
         </style>
     </head>
     <body>
@@ -130,7 +223,7 @@ if ($roleid == 1) {
         }
 
         th {
-            background: #4a69bd;
+            background: #1e2a38;
             color: white;
             padding: 12px 10px;
             font-size: 15px;
@@ -148,7 +241,7 @@ if ($roleid == 1) {
 
         /* Buttons */
         .btn-edit {
-            background: #1e90ff;
+            background: #0b3c91;
             color: white;
             padding: 6px 10px;
             text-decoration: none;
@@ -157,11 +250,11 @@ if ($roleid == 1) {
             font-size: 13px;
         }
         .btn-edit:hover {
-            background: #0f67c5;
+            background: #1e88e5;
         }
 
         .btn-delete {
-            background: #e74c3c;
+            background: #b11226;
             color: white;
             padding: 6px 10px;
             border: none;
@@ -170,7 +263,7 @@ if ($roleid == 1) {
             font-size: 13px;
         }
         .btn-delete:hover {
-            background: #c0392b;
+            background: #8b1e3f;
         }
 
         .action-container {

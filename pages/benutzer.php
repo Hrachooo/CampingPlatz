@@ -64,7 +64,7 @@ $result = $conn->query("
         }
 
         th {
-            background: #4a69bd;
+            background: #1e2a38;
             color: white;
             padding: 12px 10px;
             font-size: 15px;
@@ -81,29 +81,29 @@ $result = $conn->query("
 
         /* Buttons */
         .btn-edit {
-            background: #1e90ff;
+            background: #0b3c91;
             color: white;
-            padding: 7px 12px;
+            padding: 6px 10px;
             text-decoration: none;
             border-radius: 5px;
             margin-right: 5px;
             font-size: 13px;
         }
         .btn-edit:hover {
-            background: #0f67c5;
+            background: #1e88e5;
         }
 
         .btn-delete {
-            background: #e74c3c;
+            background: #b11226;
             color: white;
-            padding: 7px 12px;
+            padding: 6px 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 13px;
         }
         .btn-delete:hover {
-            background: #c0392b;
+            background: #8b1e3f;
         }
 
         .action-container {

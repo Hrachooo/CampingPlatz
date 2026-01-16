@@ -165,7 +165,7 @@ if ($roleid == 1) {
         }
 
         th {
-            background-color: #4a69bd;
+            background-color: #1e2a38;
             color: white;
         }
 

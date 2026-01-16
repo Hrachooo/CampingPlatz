@@ -67,10 +67,20 @@ if ($roleid == 1) {
     </html>
     <?php
     exit;
-} else {
-    // Buchungen holen 
-    $result = $conn->query(" SELECT b.*, g.vorname, g.nachname FROM buchung b LEFT JOIN gast g ON b.gast_id = g.id ");
 }
+
+// BUCHUNGEN + ABRECHNUNG LADEN
+$result = $conn->query("
+    SELECT 
+        b.*, 
+        g.vorname, 
+        g.nachname,
+        a.gesamt_betrag,
+        a.created_at AS abrechnung_datum
+    FROM buchung b
+    LEFT JOIN gast g ON b.gast_id = g.id
+    LEFT JOIN abrechnung a ON a.buchung_id = b.id
+");
 ?>
 
 <!DOCTYPE html>
@@ -91,11 +101,6 @@ if ($roleid == 1) {
         h1 {
             text-align: center;
             color: #333;
-        }
-        .user-info {
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: bold;
         }
         .search-box {
             width: 80%;
@@ -118,7 +123,7 @@ if ($roleid == 1) {
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
         th {
-            background: #4a69bd;
+            background: #1e2a38;
             color: white;
             padding: 12px 10px;
             font-size: 15px;
@@ -151,20 +156,27 @@ if ($roleid == 1) {
             <th>ID</th>
             <th>Gast</th>
             <th>Gast ID</th>
-            <th>Stellplatz ID</th>            
+            <th>Stellplatz ID</th>
             <th>Anreise</th>
             <th>Abreise</th>
             <th>Strom</th>
             <th>Tiere</th>
             <th>Erwachsene</th>
             <th>Kinder</th>
-            <th>Erstellt am</th>
+            <th>Gesamtpreis</th>
+            <th>Abrechnung erstellt</th>
+            <th>Buchung erstellt</th>
         </tr>
 
         <?php
         if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
+
                 $gastName = htmlspecialchars($row['vorname'].' '.$row['nachname']);
+                $preis = $row['gesamt_betrag'] !== null 
+                    ? number_format($row['gesamt_betrag'], 2, ",", ".") . " €"
+                    : "<span style='color:#e74c3c;'>Keine Abrechnung</span>";
+
                 echo "<tr>";
                 echo "<td>".$row['id']."</td>";
                 echo "<td>".$gastName."</td>";
@@ -176,11 +188,13 @@ if ($roleid == 1) {
                 echo "<td>".($row['tiere'] ? "Ja" : "Nein")."</td>";
                 echo "<td>".$row['anzahl_erwachsene']."</td>";
                 echo "<td>".$row['anzahl_kinder']."</td>";
+                echo "<td>".$preis."</td>";
+                echo "<td>".$row['abrechnung_datum']."</td>";
                 echo "<td>".$row['created_at']."</td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='11' style='text-align:center;'>Keine Buchungen gefunden</td></tr>";
+            echo "<tr><td colspan='13' style='text-align:center;'>Keine Buchungen gefunden</td></tr>";
         }
         ?>
     </table>
