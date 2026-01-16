@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Pflichtfelder prüfen
 $required = [
     'gast_id', 'stellplatz_id', 'anreise_datum', 'abreise_datum',
-    'erwachsene', 'kinder', 'tier', 'wasser', 'strom'
+    'erwachsene', 'kinder', 'tier', 'wasser', 'strom', 'preis'
 ];
 
 foreach ($required as $field) {
@@ -27,7 +27,8 @@ $erwachsene     = intval($_POST['erwachsene']);
 $kinder         = intval($_POST['kinder']);
 $tiere          = !empty($_POST['tier']) ? 1 : 0;
 $strom          = !empty($_POST['strom']) ? 1 : 0;
-$wasser         = !empty($_POST['wasser']) ? 1 : 0; // falls du später speichern willst
+$wasser         = !empty($_POST['wasser']) ? 1 : 0;
+$gesamtpreis    = floatval($_POST['preis']);
 $created_at     = date("Y-m-d H:i:s");
 
 // Datums-Validierung
@@ -39,7 +40,7 @@ if ($abreise < $anreise) {
     die("Abreisedatum darf nicht vor dem Anreisedatum liegen.");
 }
 
-// SQL ausführen
+// BUCHUNG speichern
 $stmt = $conn->prepare("
     INSERT INTO buchung 
         (gast_id, stellplatz_id, abreise_datum, anreise_datum, strom, tiere, anzahl_erwachsene, anzahl_kinder, created_at) 
@@ -60,14 +61,26 @@ $stmt->bind_param(
     $created_at
 );
 
-if ($stmt->execute()) {
-
-    // Optional: Weiterleitung auf Erfolgsseite
-    header("Location: buchung_erfolg.php?buchung_id=" . $stmt->insert_id);
-    exit;
-
-} else {
-    die("Fehler beim Speichern: " . $stmt->error);
+if (!$stmt->execute()) {
+    die("Fehler beim Speichern der Buchung: " . $stmt->error);
 }
+
+$buchung_id = $stmt->insert_id;
+
+// ABRECHNUNG speichern
+$stmt2 = $conn->prepare("
+    INSERT INTO abrechnung (buchung_id, created_at, gesamt_betrag)
+    VALUES (?, ?, ?)
+");
+
+$stmt2->bind_param("isd", $buchung_id, $created_at, $gesamtpreis);
+
+if (!$stmt2->execute()) {
+    die("Fehler beim Speichern der Abrechnung: " . $stmt2->error);
+}
+
+// Weiterleitung
+header("Location: buchung_erfolg.php?buchung_id=" . $buchung_id);
+exit;
 
 ?>
