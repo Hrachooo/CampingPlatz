@@ -99,9 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         button{
           width:100%; padding:0.75rem;
-          background:var(--accent); color:white;
+          background: #1e2a38;
           border:none; border-radius:8px;
           font-size:1rem; cursor:pointer;
+          color: white;
         }
         button:hover{ background:var(--accent-dark); }
         .error{ color:var(--error); text-align:center; margin-top:1rem; }
